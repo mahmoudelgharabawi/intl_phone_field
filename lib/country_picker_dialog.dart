@@ -46,7 +46,6 @@ class CountryPickerDialog extends StatefulWidget {
   final List<Country> filteredCountries;
   final PickerDialogStyle? style;
   final String languageCode;
-  final bool disableClickOnFlag;
 
   const CountryPickerDialog({
     Key? key,
@@ -56,7 +55,6 @@ class CountryPickerDialog extends StatefulWidget {
     required this.onCountryChanged,
     required this.selectedCountry,
     required this.filteredCountries,
-    this.disableClickOnFlag = false,
     this.style,
   }) : super(key: key);
 
@@ -141,13 +139,11 @@ class _CountryPickerDialogState extends State<CountryPickerDialog> {
                         '+${_filteredCountries[index].dialCode}',
                         style: widget.style?.countryCodeStyle ?? const TextStyle(fontWeight: FontWeight.w700),
                       ),
-                      onTap: widget.disableClickOnFlag
-                          ? null
-                          : () {
-                              _selectedCountry = _filteredCountries[index];
-                              widget.onCountryChanged(_selectedCountry);
-                              Navigator.of(context).pop();
-                            },
+                      onTap: () {
+                        _selectedCountry = _filteredCountries[index];
+                        widget.onCountryChanged(_selectedCountry);
+                        Navigator.of(context).pop();
+                      },
                     ),
                     widget.style?.listTileDivider ?? const Divider(thickness: 1),
                   ],

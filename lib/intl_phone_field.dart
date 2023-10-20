@@ -365,7 +365,6 @@ class _IntlPhoneFieldState extends State<IntlPhoneField> {
       useRootNavigator: false,
       builder: (context) => StatefulBuilder(
         builder: (ctx, setState) => CountryPickerDialog(
-          disableClickOnFlag: widget.disableClickOnFlag,
           languageCode: widget.languageCode.toLowerCase(),
           style: widget.pickerDialogStyle,
           filteredCountries: filteredCountries,
@@ -458,7 +457,11 @@ class _IntlPhoneFieldState extends State<IntlPhoneField> {
         decoration: widget.dropdownDecoration,
         child: InkWell(
           borderRadius: widget.dropdownDecoration.borderRadius as BorderRadius?,
-          onTap: widget.enabled ? _changeCountry : null,
+          onTap: widget.enabled
+              ? widget.disableClickOnFlag
+                  ? null
+                  : _changeCountry
+              : null,
           child: Padding(
             padding: widget.flagsButtonPadding,
             child: Row(
