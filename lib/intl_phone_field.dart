@@ -249,6 +249,8 @@ class IntlPhoneField extends StatefulWidget {
   /// If null, default magnification configuration will be used.
   final TextMagnifierConfiguration? magnifierConfiguration;
 
+  final bool disableClickOnFlag;
+
   const IntlPhoneField({
     Key? key,
     this.formFieldKey,
@@ -260,6 +262,7 @@ class IntlPhoneField extends StatefulWidget {
     this.textAlignVertical,
     this.onTap,
     this.readOnly = false,
+    this.disableClickOnFlag = false,
     this.initialValue,
     this.keyboardType = TextInputType.phone,
     this.controller,
@@ -362,6 +365,7 @@ class _IntlPhoneFieldState extends State<IntlPhoneField> {
       useRootNavigator: false,
       builder: (context) => StatefulBuilder(
         builder: (ctx, setState) => CountryPickerDialog(
+          disableClickOnFlag: widget.disableClickOnFlag,
           languageCode: widget.languageCode.toLowerCase(),
           style: widget.pickerDialogStyle,
           filteredCountries: filteredCountries,
