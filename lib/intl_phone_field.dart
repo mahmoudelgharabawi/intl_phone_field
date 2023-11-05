@@ -16,6 +16,7 @@ class IntlPhoneField extends StatefulWidget {
 
   /// Whether to hide the text being edited (e.g., for passwords).
   final bool obscureText;
+  final String? validateMsgIfTextEmpty;
 
   /// How the text should be aligned horizontally.
   final TextAlign textAlign;
@@ -255,6 +256,7 @@ class IntlPhoneField extends StatefulWidget {
     Key? key,
     this.formFieldKey,
     this.initialCountryCode,
+    this.validateMsgIfTextEmpty,
     this.languageCode = 'en',
     this.disableAutoFillHints = false,
     this.obscureText = false,
@@ -430,7 +432,8 @@ class _IntlPhoneFieldState extends State<IntlPhoneField> {
         widget.onChanged?.call(phoneNumber);
       },
       validator: (value) {
-        if (value == null || value == '' || !isNumeric(value)) return validatorMessage;
+        if (value == '') return widget.validateMsgIfTextEmpty;
+        if (value == null || !isNumeric(value)) return validatorMessage;
         if (!widget.disableLengthCheck) {
           return value.length >= _selectedCountry.minLength && value.length <= _selectedCountry.maxLength
               ? null
