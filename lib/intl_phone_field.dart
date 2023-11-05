@@ -14,6 +14,8 @@ class IntlPhoneField extends StatefulWidget {
   /// The TextFormField key.
   final GlobalKey<FormFieldState>? formFieldKey;
 
+  final String? Function(String?)? textFieldValidator;
+
   /// Whether to hide the text being edited (e.g., for passwords).
   final bool obscureText;
 
@@ -272,6 +274,7 @@ class IntlPhoneField extends StatefulWidget {
     this.dropdownTextStyle,
     this.onSubmitted,
     this.validator,
+    this.textFieldValidator,
     this.onChanged,
     this.countries,
     this.onCountryChanged,
@@ -430,6 +433,10 @@ class _IntlPhoneFieldState extends State<IntlPhoneField> {
         widget.onChanged?.call(phoneNumber);
       },
       validator: (value) {
+        print('Valueeeeeeeee ${value}');
+
+        widget.textFieldValidator?.call(value);
+
         if (value == null || !isNumeric(value)) return validatorMessage;
         if (!widget.disableLengthCheck) {
           return value.length >= _selectedCountry.minLength && value.length <= _selectedCountry.maxLength
